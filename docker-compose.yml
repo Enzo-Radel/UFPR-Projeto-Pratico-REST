@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Container para desenvolvimento Java 24
+  java-dev:
+    image: openjdk:24-jdk
+    container_name: biblioteca-java-dev
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+      - "5005:5005"  # Porta para debug remoto
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    command: tail -f /dev/null  # Mantém o container rodando
+    networks:
+      - biblioteca-network
+
+  # Container MySQL para banco de dados
+  mysql:
+    image: mysql:8.0
+    container_name: biblioteca-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: biblioteca
+      MYSQL_USER: biblioteca_user
+      MYSQL_PASSWORD: biblioteca123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - biblioteca-network
+
+  # Container para administração do MySQL (opcional)
+  mysql-admin:
+    image: phpmyadmin/phpmyadmin
+    container_name: biblioteca-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root123
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - biblioteca-network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  biblioteca-network:
+    driver: bridge
