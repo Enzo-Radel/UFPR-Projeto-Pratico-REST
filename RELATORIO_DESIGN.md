@@ -1,6 +1,6 @@
-# 📋 Relatório de Design - API REST de Biblioteca
+# Relatório de Design - API REST de Biblioteca
 
-## 🏗️ Decisões de Arquitetura
+## Decisões de Arquitetura
 
 ### **1. Linguagem de Programação: Java**
 - **Motivação:** Aumentar a prática e familiaridade com a linguagem Java
@@ -30,7 +30,7 @@
   - Facilita deploy em diferentes ambientes
   - Reduz tempo de setup para novos desenvolvedores
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 | **Tecnologia** | **Versão** | **Propósito** |
 |----------------|------------|---------------|
@@ -41,7 +41,7 @@
 | **Docker** | - | Containerização |
 | **Maven** | - | Gerenciamento de dependências |
 
-## 📊 Estrutura da API
+## Estrutura da API
 
 ### **Entidades Principais:**
 - **Usuários:** Gestão de usuários da biblioteca
