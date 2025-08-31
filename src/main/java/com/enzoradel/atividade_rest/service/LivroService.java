@@ -68,6 +68,15 @@ public class LivroService {
         return livros.map(LivroResponseDTO::new);
     }
     
+    // READ - Listar todos sem paginação
+    @Transactional(readOnly = true)
+    public List<LivroResponseDTO> listarTodos() {
+        List<Livro> livros = livroRepository.findAll();
+        return livros.stream()
+                .map(LivroResponseDTO::new)
+                .collect(Collectors.toList());
+    }
+    
     // UPDATE
     public LivroResponseDTO atualizarLivro(String id, LivroDTO livroDTO) {
         // Validações

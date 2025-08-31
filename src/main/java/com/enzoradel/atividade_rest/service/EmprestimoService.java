@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -83,6 +85,15 @@ public class EmprestimoService {
     public Page<EmprestimoResponseDTO> listarTodos(Pageable pageable) {
         Page<Emprestimo> emprestimos = emprestimoRepository.findAll(pageable);
         return emprestimos.map(EmprestimoResponseDTO::new);
+    }
+    
+    // READ - Listar todos sem paginação
+    @Transactional(readOnly = true)
+    public List<EmprestimoResponseDTO> listarTodos() {
+        List<Emprestimo> emprestimos = emprestimoRepository.findAll();
+        return emprestimos.stream()
+                .map(EmprestimoResponseDTO::new)
+                .collect(Collectors.toList());
     }
     
     // UPDATE - Devolver livro
