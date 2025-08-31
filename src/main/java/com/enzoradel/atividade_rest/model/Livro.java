@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class Livro {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "autor_id")
+    @JsonBackReference
     private Autor autor;
     
     @Column(name = "created_at", nullable = false, updatable = false)
